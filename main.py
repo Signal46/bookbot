@@ -1,15 +1,22 @@
+import sys
+from stats import get_num_words
+
 def main():
-    book_path = "/home/ericsignal/workspace/github.com/Signal46/bookbot/books/frankenstein.txt"
-    # book_path = "github.com\\Signal46\\bookbot\\books"
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+    
+    book_path = sys.argv[1]
     text = get_book_text(book_path)
-    num_words = get_num_words(text)    
+    num_words = get_num_words(text)
     found_letters = get_num_unique_characters(text)
     sorted_letters = sort_letters_by_frequency(found_letters)
-    write_report(num_words, sorted_letters)
     
-def get_num_words(text):
-    words = text.split()
-    return len(words)
+    # Print character frequencies
+    for letter, count in sorted_letters:
+        print(f"{letter}: {count}")
+    
+
 
 def get_book_text(path):
     with open(path) as f:
